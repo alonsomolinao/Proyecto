@@ -25,6 +25,9 @@ int main ()
     int p, c, j, sumapesomin;
     int posf[1000], num[1000];
     long k;
+
+    sumamax=0; // Limpieza pendiente
+
     srand (time(NULL));
 
     configurarTienda();
@@ -40,20 +43,17 @@ int main ()
     // Encontrar maximo
     sumamax = encontrarMaximo();
 
-    sumavalor=0;
-    sumapeso=0;
-    l=0;
     sumapesomin=10000; //El peso minimo empieza siendo mayor a todos los pesos.
 
     for (k=0;k<205000;k++)
     {
-        for(int i=nmin;i<cantidadDeProductos;i++) //se le asigna un valor de 100 a los números
+        for(int i= 0;i<cantidadDeProductos;i++) //se le asigna un valor de 100 a los números
         {
             num[i]=100;
         }
-        l=0;
-        sumapeso=0;
-        sumavalor=0;
+
+        inicializarContadores();
+
         for (int i=0;i<cantidadDeProductos;i++)
         {
             l=0;
@@ -80,25 +80,19 @@ int main ()
         }
         if (sumamax==sumavalor) //Se encuentra la combinacion que de ese valor maximo con el minimo peso.
         {
-            if (sumapesomin>sumapeso)
+            if (sumapesomin > sumapeso)
             {
-                sumapesomin=sumapeso;
+                sumapesomin = sumapeso;
             }
         }
     }
 
-    sumavalor=0;
-    sumapeso=0;
-    l=0;
-    p=0;
-
     for (k=0;k<205000;k++)
     {
-        l=0;
-        sumapeso=0;
-        sumavalor=0;
+        inicializarContadores();
+
         p=0;
-        for(int i=nmin;i<cantidadDeProductos;i++) //se le asigna un valor de 100 a los números
+        for(int i= 0;i<cantidadDeProductos;i++) //se le asigna un valor de 100 a los números
         {
             num[i]=100;
         }
@@ -168,7 +162,6 @@ int main ()
 
     }
 
-
     return 0;
 }
 
@@ -202,7 +195,6 @@ void inicializarContadores()
 {
     sumapeso=0;
     sumavalor=0;
-    sumamax=0;
     l=0;
 }
 
@@ -210,22 +202,20 @@ long encontrarMaximo()
 {
     long result = 0;
     int num[20];
-    for (int k=0;k<205000;k++) //se repite todo este ciclo muchas veces para tener el valor maximo.
+    for (int k = 0;k < 205000; k++) //se repite todo este ciclo muchas veces para tener el valor maximo.
     {
-        l=0;
-        sumapeso=0;
-        sumavalor=0;
-        for(int i= 0 ;i<cantidadDeProductos;i++) //se le asigna un valor de 100 a los números
+        inicializarContadores();
+        for(int i = 0 ;i<cantidadDeProductos;i++) //se le asigna un valor de 100 a los números
         {
-            num[i]=100;
+            num[i] = 100;
         }
-        for (int i=0;i<cantidadDeProductos;i++)
+        for (int i = 0;i<cantidadDeProductos;i++)
         {
-            l=0;
-            num[i]=rand() % cantidadDeProductos+0; //se obtiene un numero aleatorio entre 0 y n que va a indicar la posicion de lo que se agrega.
+            l = 0;
+            num[i] = rand() % cantidadDeProductos+0; //se obtiene un numero aleatorio entre 0 y n que va a indicar la posicion de lo que se agrega.
             for (int j=0;j<cantidadDeProductos;j++)
             {
-                if (num[i]!=num[cantidadDeProductos-j-1])
+                if (num[i] != num[cantidadDeProductos-j-1])
                 {
                     l++;
                 }
@@ -233,21 +223,21 @@ long encontrarMaximo()
             if (l==cantidadDeProductos-1) //Si este numero no se habia utilizado antes
             {
                 sumapeso+=peso[num[i]];//se le suma el peso del producto en posicion num[i]
-                if (sumapeso<=pesoMaximo) //si el peso de los productos no excede la capacidad del carrito
+                if (sumapeso <= pesoMaximo) //si el peso de los productos no excede la capacidad del carrito
                 {
-                    sumavalor+=valor[num[i]]; //se le suma el valor de este producto
+                    sumavalor += valor[num[i]]; //se le suma el valor de este producto
                 }
                 else
                 {
-                    sumapeso-=peso[num[i]]; //se resta el peso de ese producto si el carrito ya no tenía la capacidad
+                    sumapeso -= peso[num[i]]; //se resta el peso de ese producto si el carrito ya no tenía la capacidad
                 }
             }
         }
-        if (sumamax<sumavalor) //si la suma de valores en esta combinación excede la sumamaxima...
+        if (result<sumavalor) //si la suma de valores en esta combinación excede la sumamaxima...
         {
-            sumamax=sumavalor; //se le asigna este nuevo valor de sumamaxima
+            result = sumavalor; //se le asigna este nuevo valor de sumamaxima
         }
     }
-    return sumamax;
+    return result;
 }
 
