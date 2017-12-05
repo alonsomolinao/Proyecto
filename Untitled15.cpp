@@ -7,6 +7,7 @@ using namespace std;
 long pesoMaximo;
 int cantidadDeProductos;
 
+void configurarTienda();
 
 int main ()
 
@@ -22,6 +23,8 @@ int main ()
     configurarTienda();
 
     valor = new int[cantidadDeProductos];
+    peso = new int[cantidadDeProductos];
+    
     for (i=0;i<cantidadDeProductos;i++) //Se lee el peso y valor de n cantidad de productos.
     {
         cin>>peso[i];
@@ -214,7 +217,10 @@ void configurarTienda()
     while (!accepted)
     {
         cin>>n>>m;
-        if n <= 20 && m >= 10000;
+        if (n <= 20 && m >= 10000)
+        {
+        	
+		}
     }
     cantidadDeProductos = n;
     pesoMaximo = m;
