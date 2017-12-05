@@ -2,6 +2,12 @@
 #include <stdlib.h>
 #include <time.h> //Estos dos se requieren para poder generar numeros aleatorios.
 using namespace std;
+// Modalidades
+enum Modalidades {
+    Primera,
+    Segunda,
+    Tercera
+};
 
 // caracteristicas de la tienda
 long pesoMaximo;
@@ -12,17 +18,19 @@ int * valor, * peso;
 
 // Contadores
 long  sumapeso, sumamax, sumavalor;
-int l;
+int l, sumapesomin;
 
-//MŽtodos
+// MŽtodos
 void configurarTienda();
 void configurarProductos();
 void inicializarContadores();
-long encontrarMaximo();
+long encontrarMaximos(Modalidades modalidad);
+
+
 
 int main ()
 {
-    int p, c, j, sumapesomin;
+    int p, c, j;
     int posf[1000], num[1000];
     long k;
 
@@ -41,51 +49,11 @@ int main ()
     inicializarContadores();
 
     // Encontrar maximo
-    sumamax = encontrarMaximo();
+    sumamax = encontrarMaximos(Primera);
 
-    sumapesomin=10000; //El peso minimo empieza siendo mayor a todos los pesos.
+    sumapesomin = 10000; //El peso minimo empieza siendo mayor a todos los pesos.
 
-    for (k=0;k<205000;k++)
-    {
-        for(int i= 0;i<cantidadDeProductos;i++) //se le asigna un valor de 100 a los números
-        {
-            num[i]=100;
-        }
-
-        inicializarContadores();
-
-        for (int i=0;i<cantidadDeProductos;i++)
-        {
-            l=0;
-            num[i]=rand() % cantidadDeProductos+0;
-            for (j=0;j<cantidadDeProductos;j++)
-            {
-                if (num[i]!=num[cantidadDeProductos-j-1])
-                {
-                    l++;
-                }
-            }
-            if (l==cantidadDeProductos-1)
-            {
-                sumapeso+=peso[num[i]];//se le suma el peso del siguiente producto conveniente
-                if (sumapeso<=pesoMaximo) //si el peso de los productos no excede la capacidad del carrito
-                {
-                    sumavalor+=valor[num[i]];
-                }
-                else
-                {
-                    sumapeso-=peso[num[i]]; //se resta el peso de ese producto si el carrito ya no tenía la capacidad
-                }
-            }
-        }
-        if (sumamax==sumavalor) //Se encuentra la combinacion que de ese valor maximo con el minimo peso.
-        {
-            if (sumapesomin > sumapeso)
-            {
-                sumapesomin = sumapeso;
-            }
-        }
-    }
+    sumapesomin = (int) encontrarMaximos(Segunda);
 
     for (k=0;k<205000;k++)
     {
@@ -198,46 +166,66 @@ void inicializarContadores()
     l=0;
 }
 
-long encontrarMaximo()
+
+
+long encontrarMaximos(Modalidades modalidad)
 {
     long result = 0;
-    int num[20];
+    long sumatoria;
+    int  * productos = new int[cantidadDeProductos];
     for (int k = 0;k < 205000; k++) //se repite todo este ciclo muchas veces para tener el valor maximo.
     {
+        sumatoria = 0;
         inicializarContadores();
-        for(int i = 0 ;i<cantidadDeProductos;i++) //se le asigna un valor de 100 a los números
+        for(int i = 0 ;i < cantidadDeProductos; i++) //se le asigna un valor de 100 a los números
         {
-            num[i] = 100;
+            productos[i] = 100;
         }
-        for (int i = 0;i<cantidadDeProductos;i++)
+        for (int i = 0;i < cantidadDeProductos; i++)
         {
             l = 0;
-            num[i] = rand() % cantidadDeProductos+0; //se obtiene un numero aleatorio entre 0 y n que va a indicar la posicion de lo que se agrega.
-            for (int j=0;j<cantidadDeProductos;j++)
+            productos[i] = rand() % cantidadDeProductos+0; //se obtiene un numero aleatorio entre 0 y n que va a indicar la posicion de lo que se agrega.
+            for (int j = 0; j < cantidadDeProductos; j++)
             {
-                if (num[i] != num[cantidadDeProductos-j-1])
+                if (productos[i] != productos[cantidadDeProductos - j - 1])
                 {
                     l++;
                 }
             }
-            if (l==cantidadDeProductos-1) //Si este numero no se habia utilizado antes
+            if (l == cantidadDeProductos - 1) //Si este numero no se habia utilizado antes
             {
-                sumapeso+=peso[num[i]];//se le suma el peso del producto en posicion num[i]
+                sumapeso+=peso[productos[i]];//se le suma el peso del producto en posicion num[i]
                 if (sumapeso <= pesoMaximo) //si el peso de los productos no excede la capacidad del carrito
                 {
-                    sumavalor += valor[num[i]]; //se le suma el valor de este producto
+                    sumatoria += valor[productos[i]]; //se le suma el valor de este producto
                 }
                 else
                 {
-                    sumapeso -= peso[num[i]]; //se resta el peso de ese producto si el carrito ya no tenía la capacidad
+                    sumapeso -= peso[productos[i]]; //se resta el peso de ese producto si el carrito ya no tenía la capacidad
                 }
             }
         }
-        if (result<sumavalor) //si la suma de valores en esta combinación excede la sumamaxima...
-        {
-            result = sumavalor; //se le asigna este nuevo valor de sumamaxima
+        switch (modalidad) {
+            case Primera:
+                if (result < sumatoria) //si la suma de valores en esta combinación excede la sumamaxima...
+                {
+                    result = sumatoria; //se le asigna este nuevo valor de sumamaxima
+                }
+                break;
+            case Segunda:
+                if (sumamax==sumatoria) //Se encuentra la combinacion que de ese valor maximo con el minimo peso.
+                {
+                    if (sumapesomin > sumapeso)
+                    {
+                        sumapesomin = sumapeso;
+                    }
+                }
+                break;
+            default:
+                break;
         }
     }
+    if(modalidad == Segunda) {result = sumapesomin; }
     return result;
 }
 
