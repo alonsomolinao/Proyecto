@@ -26,8 +26,6 @@ void configurarProductos();
 void inicializarContadores();
 long encontrarMaximos(Modalidades modalidad);
 
-
-
 int main ()
 {
     int c;
@@ -61,7 +59,6 @@ int main ()
     cout<<  endl;
 
     c=0;
-
 
     for (int i=0;i<cantidadDeProductos;i++)
     {
@@ -128,14 +125,25 @@ void inicializarContadores()
     l=0;
 }
 
+int factorial(int n)
+{
+    if (n == 0)
+        return 1;
+    return n * factorial(n - 1);
+}
 
+int calcularCiclos() {
+    return factorial(cantidadDeProductos);
+}
 
 long encontrarMaximos(Modalidades modalidad)
 {
     long result = 0;
     long sumatoria;
     int  * productos = new int[cantidadDeProductos];
-    for (int k = 0;k < 205000; k++) //se repite todo este ciclo muchas veces para tener el valor maximo.
+    int ciclos =  calcularCiclos();
+
+    for (int k = 0; k < ciclos;  k++) //se repite todo este ciclo muchas veces para tener el valor maximo.
     {
         posicion = 0;
         sumatoria = 0;
@@ -190,7 +198,7 @@ long encontrarMaximos(Modalidades modalidad)
             case Tercera:
                 if (sumamax==sumatoria && sumapesomin==sumapeso)
                 {
-                    k = 205000;
+                    k = ciclos;
                 }
                 break;
         }
