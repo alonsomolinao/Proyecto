@@ -3,18 +3,26 @@
 #include <time.h> //Estos dos se requieren para poder generar numeros aleatorios.
 using namespace std;
 
+//caracteristicas de la tienda
+long pesoMaximo;
+int cantidadDeProductos;
+
+
 int main ()
 
 {
+    // Arreglos en tiempo de ejecucion
+    int * valor, peso;
+
     int i, p, l, c, x, j, s, n, sumapesomin, nmin;
-    int valor[1000], peso[1000], max[1000], posf[1000], num[1000];
-    long m, sumapeso, sumamax, sumavalor, k;
+    int max[1000], posf[1000], num[1000];
+    long  sumapeso, sumamax, sumavalor, k;
     srand (time(NULL));
     
-    
-    cin>>n>>m; //Se lee la cantidad de productos y la capacidad del carrito.
-    
-    for (i=0;i<n;i++) //Se lee el peso y valor de n cantidad de productos.
+    configurarTienda();
+
+    valor = new int[cantidadDeProductos];
+    for (i=0;i<cantidadDeProductos;i++) //Se lee el peso y valor de n cantidad de productos.
     {
         cin>>peso[i];
         cin>>valor[i];
@@ -194,6 +202,24 @@ int main ()
         
     }
     
-    
+
     return 0;
 }
+
+void configurarTienda()
+{
+    int n = 0;
+    long m = 0;
+    bool accepted = false;
+    while (!accepted)
+    {
+        cin>>n>>m;
+        if n <= 20 && m >= 10000;
+    }
+    cantidadDeProductos = n;
+    pesoMaximo = m;
+}
+
+// Detrminar peso y valor de cada uno
+
+
