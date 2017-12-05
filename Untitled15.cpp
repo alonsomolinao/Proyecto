@@ -125,14 +125,14 @@ void inicializarContadores()
     l=0;
 }
 
-int factorial(int n)
+long factorial(int n)
 {
     if (n == 0)
         return 1;
     return n * factorial(n - 1);
 }
 
-int calcularCiclos() {
+long calcularCiclos() {
     return factorial(cantidadDeProductos);
 }
 
@@ -140,9 +140,9 @@ void encontrarMaximos(Modalidades modalidad)
 {
     long sumatoria;
     int  * productos = new int[cantidadDeProductos];
-    int limit = 205000;
+    long limit = calcularCiclos();
 
-    for (int k = 0; k < limit; k++) //se repite todo este ciclo muchas veces para tener el valor maximo.
+    for (long k = 0; k < limit; k++) //se repite todo este ciclo muchas veces para tener el valor maximo.
     {
         posicion = 0;
         sumatoria = 0;
@@ -183,10 +183,7 @@ void encontrarMaximos(Modalidades modalidad)
                 {
                     sumamax = sumatoria; //se le asigna este nuevo valor de sumamaxima
                 }
-                else if (sumamax == sumatoria)
-                {
-                    k = limit;
-                }
+
                 break;
             case Segunda:
                 if (sumamax == sumatoria) //Se encuentra la combinacion que de ese valor maximo con el minimo peso.
