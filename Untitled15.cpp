@@ -7,15 +7,14 @@ using namespace std;
 long pesoMaximo;
 int cantidadDeProductos;
 
+//Arreglos de productos en tiempo de ejecucion
+int * valor, * peso;
+
 void configurarTienda();
 
 int main ()
-
 {
-    // Arreglos en tiempo de ejecucion
-    int * valor, * peso;
-
-    int i, p, l, c, x, j, s, n, sumapesomin, nmin;
+    int p, l, c, x, j, s, n, sumapesomin, nmin;
     int max[1000], posf[1000], num[1000];
     long  sumapeso, sumamax, sumavalor, k;
     srand (time(NULL));
@@ -24,12 +23,6 @@ int main ()
 
     valor = new int[cantidadDeProductos];
     peso = new int[cantidadDeProductos];
-
-    for (i=0;i<cantidadDeProductos;i++) //Se lee el peso y valor de n cantidad de productos.
-    {
-        cin>>peso[i];
-        cin>>valor[i];
-    }
 
     //Todos los contadores empiezan en 0.
     sumapeso=0;
@@ -43,11 +36,11 @@ int main ()
         l=0;
         sumapeso=0;
         sumavalor=0;
-        for(i=nmin;i<n;i++) //se le asigna un valor de 100 a los números
+        for(int i=nmin;i<n;i++) //se le asigna un valor de 100 a los números
         {
             num[i]=100;
         }
-        for (i=0;i<n;i++)
+        for (int i=0;i<n;i++)
         {
             l=0;
             num[i]=rand() % n+0; //se obtiene un numero aleatorio entre 0 y n que va a indicar la posicion de lo que se agrega.
@@ -84,14 +77,14 @@ int main ()
 
     for (k=0;k<205000;k++)
     {
-        for(i=nmin;i<n;i++) //se le asigna un valor de 100 a los números
+        for(int i=nmin;i<n;i++) //se le asigna un valor de 100 a los números
         {
             num[i]=100;
         }
         l=0;
         sumapeso=0;
         sumavalor=0;
-        for (i=0;i<n;i++)
+        for (int i=0;i<n;i++)
         {
             l=0;
             num[i]=rand() % n+0;
@@ -135,11 +128,11 @@ int main ()
         sumapeso=0;
         sumavalor=0;
         p=0;
-        for(i=nmin;i<n;i++) //se le asigna un valor de 100 a los números
+        for(int i=nmin;i<n;i++) //se le asigna un valor de 100 a los números
         {
             num[i]=100;
         }
-        for (i=0;i<n;i++)
+        for (int i=0;i<n;i++)
         {
             l=0;
             num[i]=rand() % n+0;
@@ -176,7 +169,7 @@ int main ()
     c=0;
 
 
-    for (i=0;i<n;i++)
+    for (int i=0;i<n;i++)
     {
         c=0;
         for (k=1;k<p+1;k++)
@@ -217,7 +210,7 @@ void configurarTienda()
     while (!accepted)
     {
         cin>>n>>m;
-        if (n <= 20 && m >= 10000)
+        if (n <= 20 && m <= 10000)
         {
             accepted = true;
         }
@@ -226,6 +219,12 @@ void configurarTienda()
     pesoMaximo = m;
 }
 
-// Detrminar peso y valor de cada uno
-
+void configurarProductos()
+{
+    for (int i=0;i<cantidadDeProductos;i++) //Se lee el peso y valor de n cantidad de productos.
+    {
+        cin>>peso[i];
+        cin>>valor[i];
+    }
+}
 
