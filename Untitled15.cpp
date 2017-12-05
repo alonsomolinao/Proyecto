@@ -3,21 +3,26 @@
 #include <time.h> //Estos dos se requieren para poder generar numeros aleatorios.
 using namespace std;
 
-//caracteristicas de la tienda
+// caracteristicas de la tienda
 long pesoMaximo;
 int cantidadDeProductos;
 
-//Arreglos de productos en tiempo de ejecucion
+// Arreglos de productos en tiempo de ejecucion
 int * valor, * peso;
+
+// Contadores
+long  sumapeso, sumamax, sumavalor;
+int l, nmin;
 
 void configurarTienda();
 void configurarProductos();
+void inicializarContadores();
 
 int main ()
 {
-    int p, l, c, j, sumapesomin, nmin;
+    int p, c, j, sumapesomin;
     int posf[1000], num[1000];
-    long  sumapeso, sumamax, sumavalor, k;
+    long k;
     srand (time(NULL));
 
     configurarTienda();
@@ -28,11 +33,7 @@ int main ()
     configurarProductos();
 
     //Todos los contadores empiezan en 0.
-    sumapeso=0;
-    sumavalor=0;
-    sumamax=0;
-    l=0;
-    nmin=0-cantidadDeProductos;
+
 
     for (k=0;k<205000;k++) //se repite todo este ciclo muchas veces para tener el valor maximo.
     {
@@ -229,5 +230,14 @@ void configurarProductos()
         cin>>peso[i];
         cin>>valor[i];
     }
+}
+
+void inicializarContadores()
+{
+    sumapeso=0;
+    sumavalor=0;
+    sumamax=0;
+    l=0;
+    nmin=0-cantidadDeProductos;
 }
 
