@@ -15,8 +15,8 @@ void configurarProductos();
 
 int main ()
 {
-    int p, l, c, x, j, s, n, sumapesomin, nmin;
-    int max[1000], posf[1000], num[1000];
+    int p, l, c, j, cantidadDeProductos, sumapesomin, nmin;
+    int posf[1000], num[1000];
     long  sumapeso, sumamax, sumavalor, k;
     srand (time(NULL));
 
@@ -24,7 +24,7 @@ int main ()
 
     valor = new int[cantidadDeProductos];
     peso = new int[cantidadDeProductos];
-    
+
     configurarProductos();
 
     //Todos los contadores empiezan en 0.
@@ -32,29 +32,29 @@ int main ()
     sumavalor=0;
     sumamax=0;
     l=0;
-    nmin=0-n;
+    nmin=0-cantidadDeProductos;
 
     for (k=0;k<205000;k++) //se repite todo este ciclo muchas veces para tener el valor maximo.
     {
         l=0;
         sumapeso=0;
         sumavalor=0;
-        for(int i=nmin;i<n;i++) //se le asigna un valor de 100 a los números
+        for(int i=nmin;i<cantidadDeProductos;i++) //se le asigna un valor de 100 a los números
         {
             num[i]=100;
         }
-        for (int i=0;i<n;i++)
+        for (int i=0;i<cantidadDeProductos;i++)
         {
             l=0;
-            num[i]=rand() % n+0; //se obtiene un numero aleatorio entre 0 y n que va a indicar la posicion de lo que se agrega.
-            for (j=0;j<n;j++)
+            num[i]=rand() % cantidadDeProductos+0; //se obtiene un numero aleatorio entre 0 y n que va a indicar la posicion de lo que se agrega.
+            for (j=0;j<cantidadDeProductos;j++)
             {
-                if (num[i]!=num[n-j-1])
+                if (num[i]!=num[cantidadDeProductos-j-1])
                 {
                     l++;
                 }
             }
-            if (l==n-1) //Si este numero no se habia utilizado antes
+            if (l==cantidadDeProductos-1) //Si este numero no se habia utilizado antes
             {
                 sumapeso+=peso[num[i]];//se le suma el peso del producto en posicion num[i]
                 if (sumapeso<=pesoMaximo) //si el peso de los productos no excede la capacidad del carrito
@@ -80,25 +80,25 @@ int main ()
 
     for (k=0;k<205000;k++)
     {
-        for(int i=nmin;i<n;i++) //se le asigna un valor de 100 a los números
+        for(int i=nmin;i<cantidadDeProductos;i++) //se le asigna un valor de 100 a los números
         {
             num[i]=100;
         }
         l=0;
         sumapeso=0;
         sumavalor=0;
-        for (int i=0;i<n;i++)
+        for (int i=0;i<cantidadDeProductos;i++)
         {
             l=0;
-            num[i]=rand() % n+0;
-            for (j=0;j<n;j++)
+            num[i]=rand() % cantidadDeProductos+0;
+            for (j=0;j<cantidadDeProductos;j++)
             {
-                if (num[i]!=num[n-j-1])
+                if (num[i]!=num[cantidadDeProductos-j-1])
                 {
                     l++;
                 }
             }
-            if (l==n-1)
+            if (l==cantidadDeProductos-1)
             {
                 sumapeso+=peso[num[i]];//se le suma el peso del siguiente producto conveniente
                 if (sumapeso<=pesoMaximo) //si el peso de los productos no excede la capacidad del carrito
@@ -131,22 +131,22 @@ int main ()
         sumapeso=0;
         sumavalor=0;
         p=0;
-        for(int i=nmin;i<n;i++) //se le asigna un valor de 100 a los números
+        for(int i=nmin;i<cantidadDeProductos;i++) //se le asigna un valor de 100 a los números
         {
             num[i]=100;
         }
-        for (int i=0;i<n;i++)
+        for (int i=0;i<cantidadDeProductos;i++)
         {
             l=0;
-            num[i]=rand() % n+0;
-            for (j=0;j<n;j++)
+            num[i]=rand() % cantidadDeProductos+0;
+            for (j=0;j<cantidadDeProductos;j++)
             {
-                if (num[i]!=num[n-j-1])
+                if (num[i]!=num[cantidadDeProductos-j-1])
                 {
                     l++;
                 }
             }
-            if (l==n-1)
+            if (l==cantidadDeProductos-1)
             {
                 sumapeso+=peso[num[i]];//se le suma el peso del siguiente producto conveniente
                 if (sumapeso<=pesoMaximo) //si el peso de los productos no excede la capacidad del carrito
@@ -172,7 +172,7 @@ int main ()
     c=0;
 
 
-    for (int i=0;i<n;i++)
+    for (int i=0;i<cantidadDeProductos;i++)
     {
         c=0;
         for (k=1;k<p+1;k++)
@@ -182,19 +182,19 @@ int main ()
                 c=1;
             }
         }
-        if (c==1 && i!=n-1)
+        if (c==1 && i!=cantidadDeProductos-1)
         {
             cout<<1<<" ";
         }
-        else if (c==0 && i!=n-1)
+        else if (c==0 && i!=cantidadDeProductos-1)
         {
             cout<<0<<" ";
         }
-        else if (c==1 && i==n-1)
+        else if (c==1 && i==cantidadDeProductos-1)
         {
             cout<<1;
         }
-        else if (c==0 && i==n-1)
+        else if (c==0 && i==cantidadDeProductos-1)
         {
             cout<<0;
         }
