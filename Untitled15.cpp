@@ -11,6 +11,7 @@ int cantidadDeProductos;
 int * valor, * peso;
 
 void configurarTienda();
+void configurarProductos();
 
 int main ()
 {
@@ -23,6 +24,8 @@ int main ()
 
     valor = new int[cantidadDeProductos];
     peso = new int[cantidadDeProductos];
+    
+    configurarProductos();
 
     //Todos los contadores empiezan en 0.
     sumapeso=0;
