@@ -12,11 +12,13 @@ int * valor, * peso;
 
 // Contadores
 long  sumapeso, sumamax, sumavalor;
-int l, nmin;
+int l;
 
+//MŽtodos
 void configurarTienda();
 void configurarProductos();
 void inicializarContadores();
+long encontrarMaximo();
 
 int main ()
 {
@@ -33,46 +35,10 @@ int main ()
     configurarProductos();
 
     //Todos los contadores empiezan en 0.
+    inicializarContadores();
 
-
-    for (k=0;k<205000;k++) //se repite todo este ciclo muchas veces para tener el valor maximo.
-    {
-        l=0;
-        sumapeso=0;
-        sumavalor=0;
-        for(int i=nmin;i<cantidadDeProductos;i++) //se le asigna un valor de 100 a los números
-        {
-            num[i]=100;
-        }
-        for (int i=0;i<cantidadDeProductos;i++)
-        {
-            l=0;
-            num[i]=rand() % cantidadDeProductos+0; //se obtiene un numero aleatorio entre 0 y n que va a indicar la posicion de lo que se agrega.
-            for (j=0;j<cantidadDeProductos;j++)
-            {
-                if (num[i]!=num[cantidadDeProductos-j-1])
-                {
-                    l++;
-                }
-            }
-            if (l==cantidadDeProductos-1) //Si este numero no se habia utilizado antes
-            {
-                sumapeso+=peso[num[i]];//se le suma el peso del producto en posicion num[i]
-                if (sumapeso<=pesoMaximo) //si el peso de los productos no excede la capacidad del carrito
-                {
-                    sumavalor+=valor[num[i]]; //se le suma el valor de este producto
-                }
-                else
-                {
-                    sumapeso-=peso[num[i]]; //se resta el peso de ese producto si el carrito ya no tenía la capacidad
-                }
-            }
-        }
-        if (sumamax<sumavalor) //si la suma de valores en esta combinación excede la sumamaxima...
-        {
-            sumamax=sumavalor; //se le asigna este nuevo valor de sumamaxima
-        }
-    }
+    // Encontrar maximo
+    sumamax = encontrarMaximo();
 
     sumavalor=0;
     sumapeso=0;
@@ -238,6 +204,50 @@ void inicializarContadores()
     sumavalor=0;
     sumamax=0;
     l=0;
-    nmin=0-cantidadDeProductos;
+}
+
+long encontrarMaximo()
+{
+    long result = 0;
+    int num[20];
+    for (int k=0;k<205000;k++) //se repite todo este ciclo muchas veces para tener el valor maximo.
+    {
+        l=0;
+        sumapeso=0;
+        sumavalor=0;
+        for(int i= 0 ;i<cantidadDeProductos;i++) //se le asigna un valor de 100 a los números
+        {
+            num[i]=100;
+        }
+        for (int i=0;i<cantidadDeProductos;i++)
+        {
+            l=0;
+            num[i]=rand() % cantidadDeProductos+0; //se obtiene un numero aleatorio entre 0 y n que va a indicar la posicion de lo que se agrega.
+            for (int j=0;j<cantidadDeProductos;j++)
+            {
+                if (num[i]!=num[cantidadDeProductos-j-1])
+                {
+                    l++;
+                }
+            }
+            if (l==cantidadDeProductos-1) //Si este numero no se habia utilizado antes
+            {
+                sumapeso+=peso[num[i]];//se le suma el peso del producto en posicion num[i]
+                if (sumapeso<=pesoMaximo) //si el peso de los productos no excede la capacidad del carrito
+                {
+                    sumavalor+=valor[num[i]]; //se le suma el valor de este producto
+                }
+                else
+                {
+                    sumapeso-=peso[num[i]]; //se resta el peso de ese producto si el carrito ya no tenía la capacidad
+                }
+            }
+        }
+        if (sumamax<sumavalor) //si la suma de valores en esta combinación excede la sumamaxima...
+        {
+            sumamax=sumavalor; //se le asigna este nuevo valor de sumamaxima
+        }
+    }
+    return sumamax;
 }
 
