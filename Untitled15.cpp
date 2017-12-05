@@ -25,7 +25,6 @@ int main ()
     sumavalor=0;
     sumamax=0;
     l=0;
-    s=0;
     nmin=0-n;
     
     for (k=0;k<205000;k++) //se repite todo este ciclo muchas veces para tener el valor maximo.
