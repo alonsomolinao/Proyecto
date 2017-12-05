@@ -14,11 +14,11 @@ long pesoMaximo;
 int cantidadDeProductos;
 
 // Arreglos de productos en tiempo de ejecucion
-int * valor, * peso;
+int * valor, * peso, * posf;
 
 // Contadores
 long  sumapeso, sumamax, sumavalor;
-int l, sumapesomin;
+int l, sumapesomin, posicion;
 
 // MŽtodos
 void configurarTienda();
@@ -30,8 +30,7 @@ long encontrarMaximos(Modalidades modalidad);
 
 int main ()
 {
-    int p, c, j;
-    int posf[1000], num[1000];
+    int c;
     long k;
 
     sumamax=0; // Limpieza pendiente
@@ -42,6 +41,7 @@ int main ()
 
     valor = new int[cantidadDeProductos];
     peso = new int[cantidadDeProductos];
+    posf = new int[cantidadDeProductos];
 
     configurarProductos();
 
@@ -53,50 +53,12 @@ int main ()
 
     sumapesomin = 10000; //El peso minimo empieza siendo mayor a todos los pesos.
 
+    //Encontrar combinaci—n con menor peso
     sumapesomin = (int) encontrarMaximos(Segunda);
 
-    for (k=0;k<205000;k++)
-    {
-        inicializarContadores();
+    int i = (int) encontrarMaximos(Tercera);
 
-        p=0;
-        for(int i= 0;i<cantidadDeProductos;i++) //se le asigna un valor de 100 a los números
-        {
-            num[i]=100;
-        }
-        for (int i=0;i<cantidadDeProductos;i++)
-        {
-            l=0;
-            num[i]=rand() % cantidadDeProductos+0;
-            for (j=0;j<cantidadDeProductos;j++)
-            {
-                if (num[i]!=num[cantidadDeProductos-j-1])
-                {
-                    l++;
-                }
-            }
-            if (l==cantidadDeProductos-1)
-            {
-                sumapeso+=peso[num[i]];//se le suma el peso del siguiente producto conveniente
-                if (sumapeso<=pesoMaximo) //si el peso de los productos no excede la capacidad del carrito
-                {
-                    p++;
-                    sumavalor+=valor[num[i]];
-                    posf[p]=num[i];
-                }
-                else
-                {
-                    sumapeso-=peso[num[i]]; //se resta el peso de ese producto si el carrito ya no tenía la capacidad
-                }
-            }
-        }
-        if (sumamax==sumavalor && sumapesomin==sumapeso)
-        {
-            break;
-        }
-    }
-
-    cout<<endl;
+    cout<<  endl;
 
     c=0;
 
@@ -104,7 +66,7 @@ int main ()
     for (int i=0;i<cantidadDeProductos;i++)
     {
         c=0;
-        for (k=1;k<p+1;k++)
+        for (k=1;k<posicion+1;k++)
         {
             if (i==posf[k])
             {
@@ -175,6 +137,7 @@ long encontrarMaximos(Modalidades modalidad)
     int  * productos = new int[cantidadDeProductos];
     for (int k = 0;k < 205000; k++) //se repite todo este ciclo muchas veces para tener el valor maximo.
     {
+        posicion = 0;
         sumatoria = 0;
         inicializarContadores();
         for(int i = 0 ;i < cantidadDeProductos; i++) //se le asigna un valor de 100 a los números
@@ -194,10 +157,13 @@ long encontrarMaximos(Modalidades modalidad)
             }
             if (l == cantidadDeProductos - 1) //Si este numero no se habia utilizado antes
             {
-                sumapeso+=peso[productos[i]];//se le suma el peso del producto en posicion num[i]
+                sumapeso += peso[productos[i]];//se le suma el peso del producto en posicion num[i]
                 if (sumapeso <= pesoMaximo) //si el peso de los productos no excede la capacidad del carrito
                 {
+
+                    posicion ++;
                     sumatoria += valor[productos[i]]; //se le suma el valor de este producto
+                    posf[posicion] = productos[i];
                 }
                 else
                 {
@@ -213,7 +179,7 @@ long encontrarMaximos(Modalidades modalidad)
                 }
                 break;
             case Segunda:
-                if (sumamax==sumatoria) //Se encuentra la combinacion que de ese valor maximo con el minimo peso.
+                if (sumamax == sumatoria) //Se encuentra la combinacion que de ese valor maximo con el minimo peso.
                 {
                     if (sumapesomin > sumapeso)
                     {
@@ -221,10 +187,15 @@ long encontrarMaximos(Modalidades modalidad)
                     }
                 }
                 break;
-            default:
+            case Tercera:
+                if (sumamax==sumatoria && sumapesomin==sumapeso)
+                {
+                    k = 205000;
+                }
                 break;
         }
     }
+
     if(modalidad == Segunda) {result = sumapesomin; }
     return result;
 }
