@@ -133,7 +133,14 @@ int factorial(int n)
 }
 
 int calcularCiclos() {
-    return factorial(cantidadDeProductos);
+    if (cantidadDeProductos < 15)
+    {
+        return factorial(cantidadDeProductos);
+    }
+    else
+    {
+        return 205000;
+    }
 }
 
 long encontrarMaximos(Modalidades modalidad)
