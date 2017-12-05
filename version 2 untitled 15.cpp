@@ -5,12 +5,11 @@ using namespace std;
 long ratio[1000];
 int pos[1000];
 int n;
+long maxs[1000];
 
 
 int EncuentraMaximo(int maxant); //Funcion que encuentra el valor maximo de la matriz ratio[].
 int EncuentraMinimo();
-
-int max[1000];
 
 int main ()
 
@@ -38,7 +37,7 @@ int main ()
 cout<<endl;
 
 	p=0;
-	max[0]=1000;
+	maxs[0]=1000;
 	
 	for (i=0;i<n;i++)
 	{
@@ -46,7 +45,7 @@ cout<<endl;
 			{
 				p=i-1; 
 			}
-			max[i]=EncuentraMaximo(max[p]); //Ordena la matriz ratio[] de mayor a menor.
+			maxs[i]=EncuentraMaximo(maxs[p]); //Ordena la matriz ratio[] de mayor a menor.
 	}
 	
 	
@@ -56,17 +55,22 @@ cout<<endl;
 	for (i=0;i<n;i++)
 	{
 		minVal2=EncuentraMinimo();
-			if (max[i]==minVal2)
+			if (maxs[i]==minVal2)
 			{
 				for (k=0;k<n;k++)
 				{
 					if (k>i)
 					{
-						max[i]=minVal2;
+						maxs[i]=minVal2;
 					}
 				}
 			}
 			//Ordena la matriz ratio[] de mayor a menor.
+	}
+	
+	for (i=0;i<n;i++)
+	{
+		cout<<maxs[i]<<endl;
 	}
 	
 	
@@ -80,12 +84,13 @@ cout<<endl;
 	{
 		for (k=0;k<n;k++)
 		{
-			if (ratio[k]==max[i])
+			if (ratio[k]==maxs[i])
 			{
 				pos[i]=k; //es la pocision en las matrices originales en donde se encuentran los valores de mayor a menor.
 			}
 		}
 	}
+	
 	
 	sumapeso=0;
 	l=0;
@@ -150,6 +155,7 @@ int EncuentraMaximo(int maxant)
 		{
 			maxVal = ratio[i]; //saca el maximo valor en la matriz que sea menor al maximo que sacó antes la función.
 		}
+		
 	}
 	
 	return maxVal;
@@ -163,9 +169,9 @@ int EncuentraMinimo()
 	
 	for(i=0; i<n; i++)
 	{
-		if(max[i] < minVal)
+		if(maxs[i] < minVal)
 		{
-			minVal = max[i]; //saca el maximo valor en la matriz que sea menor al maximo que sacó antes la función.
+			minVal = maxs[i]; //saca el maximo valor en la matriz que sea menor al maximo que sacó antes la función.
 		}
 	}
 	
