@@ -24,7 +24,7 @@ int l, sumapesomin, posicion;
 void configurarTienda();
 void configurarProductos();
 void inicializarContadores();
-long encontrarMaximos(Modalidades modalidad);
+void encontrarMaximos(Modalidades modalidad);
 
 int main ()
 {
@@ -33,7 +33,7 @@ int main ()
 
     sumamax=0; // Limpieza pendiente
 
-    srand (time(NULL));
+    srand(time(NULL));
 
     configurarTienda();
 
@@ -46,15 +46,15 @@ int main ()
     //Todos los contadores empiezan en 0.
     inicializarContadores();
 
-    // Encontrar maximo
-    sumamax = encontrarMaximos(Primera);
+    // Encontrar sumaMaxima
+    encontrarMaximos(Primera);
 
     sumapesomin = 10000; //El peso minimo empieza siendo mayor a todos los pesos.
 
     //Encontrar combinaci—n con menor peso
-    sumapesomin = (int) encontrarMaximos(Segunda);
+    encontrarMaximos(Segunda);
 
-    int i = (int) encontrarMaximos(Tercera);
+    encontrarMaximos(Tercera);
 
     cout<<  endl;
 
@@ -133,24 +133,16 @@ int factorial(int n)
 }
 
 int calcularCiclos() {
-    if (cantidadDeProductos < 15)
-    {
-        return factorial(cantidadDeProductos);
-    }
-    else
-    {
-        return 205000;
-    }
+    return factorial(cantidadDeProductos);
 }
 
-long encontrarMaximos(Modalidades modalidad)
+void encontrarMaximos(Modalidades modalidad)
 {
-    long result = 0;
     long sumatoria;
     int  * productos = new int[cantidadDeProductos];
-    int ciclos =  calcularCiclos();
+    int limit = 205000;
 
-    for (int k = 0; k < ciclos;  k++) //se repite todo este ciclo muchas veces para tener el valor maximo.
+    for (int k = 0; k < limit; k++) //se repite todo este ciclo muchas veces para tener el valor maximo.
     {
         posicion = 0;
         sumatoria = 0;
@@ -162,7 +154,7 @@ long encontrarMaximos(Modalidades modalidad)
         for (int i = 0;i < cantidadDeProductos; i++)
         {
             l = 0;
-            productos[i] = rand() % cantidadDeProductos+0; //se obtiene un numero aleatorio entre 0 y n que va a indicar la posicion de lo que se agrega.
+            productos[i] = rand() % cantidadDeProductos; //se obtiene un numero aleatorio entre 0 y la cantidad de productos que va a indicar la posicion de lo que se agrega.
             for (int j = 0; j < cantidadDeProductos; j++)
             {
                 if (productos[i] != productos[cantidadDeProductos - j - 1])
@@ -175,7 +167,6 @@ long encontrarMaximos(Modalidades modalidad)
                 sumapeso += peso[productos[i]];//se le suma el peso del producto en posicion num[i]
                 if (sumapeso <= pesoMaximo) //si el peso de los productos no excede la capacidad del carrito
                 {
-
                     posicion ++;
                     sumatoria += valor[productos[i]]; //se le suma el valor de este producto
                     posf[posicion] = productos[i];
@@ -188,9 +179,13 @@ long encontrarMaximos(Modalidades modalidad)
         }
         switch (modalidad) {
             case Primera:
-                if (result < sumatoria) //si la suma de valores en esta combinación excede la sumamaxima...
+                if (sumamax < sumatoria) //si la suma de valores en esta combinación excede la sumamaxima...
                 {
-                    result = sumatoria; //se le asigna este nuevo valor de sumamaxima
+                    sumamax = sumatoria; //se le asigna este nuevo valor de sumamaxima
+                }
+                else if (sumamax == sumatoria)
+                {
+                    k = limit;
                 }
                 break;
             case Segunda:
@@ -198,20 +193,18 @@ long encontrarMaximos(Modalidades modalidad)
                 {
                     if (sumapesomin > sumapeso)
                     {
-                        sumapesomin = sumapeso;
+                        sumapesomin = (int)sumapeso;
                     }
                 }
                 break;
             case Tercera:
                 if (sumamax==sumatoria && sumapesomin==sumapeso)
                 {
-                    k = ciclos;
+                    k = limit;
                 }
                 break;
         }
     }
-
-    if(modalidad == Segunda) {result = sumapesomin; }
-    return result;
 }
+
 
