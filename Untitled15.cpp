@@ -15,7 +15,7 @@ void configurarProductos();
 
 int main ()
 {
-    int p, l, c, j, cantidadDeProductos, sumapesomin, nmin;
+    int p, l, c, j, sumapesomin, nmin;
     int posf[1000], num[1000];
     long  sumapeso, sumamax, sumavalor, k;
     srand (time(NULL));
