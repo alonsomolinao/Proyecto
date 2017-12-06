@@ -9,7 +9,7 @@ int * pos, * valor, * peso, *posf;
 long * relacion, * maxs;
 
 void configurarTienda();
-void obtenerRatio();
+void obtenerRelacion();
 void mayoraMenorRatio();
 void imprimirResultados();
 void iniciarPosiciones();
@@ -28,7 +28,7 @@ int main ()
     relacion = new long[cantidadDeProductos];
     maxs = new long[cantidadDeProductos];
 
-    obtenerRatio();
+    obtenerRelacion();
     mayoraMenorRatio();
     iniciarPosiciones();
 
@@ -123,7 +123,7 @@ void configurarTienda()
     pesoMaximo = m;
 }
 
-void obtenerRatio()
+void obtenerRelacion()
 {
     for (int i = 0; i < cantidadDeProductos; i++) //Se lee el peso y valor de n cantidad de productos.
     {
