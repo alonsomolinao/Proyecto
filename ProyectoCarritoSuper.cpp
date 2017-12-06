@@ -2,6 +2,12 @@
 
 using namespace std;
 
+struct articulo {
+    int valor = 0;
+    int peso = 0;
+    long relacion = 0;
+};
+
 int cantidadDeProductos;
 int contador;
 long pesoMaximo;
@@ -9,7 +15,7 @@ int * pos, * valor, * peso, *posf;
 long * relacion, * maxs;
 
 void configurarTienda();
-void obtenerRelacion();
+void obtenerRatio();
 void mayoraMenorRatio();
 void imprimirResultados();
 void iniciarPosiciones();
@@ -23,15 +29,19 @@ int main ()
 
     valor = new int[cantidadDeProductos];
     peso = new int[cantidadDeProductos];
+    relacion = new long[cantidadDeProductos];
+
     posf = new int[cantidadDeProductos];
     pos = new int[cantidadDeProductos];
-    relacion = new long[cantidadDeProductos];
     maxs = new long[cantidadDeProductos];
 
-    obtenerRelacion();
+    obtenerRatio();
     mayoraMenorRatio();
-    iniciarPosiciones();
 
+    for (int i = 0; i < cantidadDeProductos; i++) //Se le asigna un valor de 1000 a la posicion para cambiar este valor mas adelante
+    {
+        pos[i] = 1000;
+    }
     for (int i = 0; i < cantidadDeProductos; i++)
     {
         for (int j = 0; j < cantidadDeProductos; j++)
@@ -55,6 +65,7 @@ int main ()
     contador = 0;
 
     iniciarPosiciones();
+
 
     for (int i = 0; i < cantidadDeProductos; i++)
     {
@@ -123,7 +134,7 @@ void configurarTienda()
     pesoMaximo = m;
 }
 
-void obtenerRelacion()
+void obtenerRatio()
 {
     for (int i = 0; i < cantidadDeProductos; i++) //Se lee el peso y valor de n cantidad de productos.
     {
@@ -131,11 +142,11 @@ void obtenerRelacion()
         cin>>valor[i];
         if (peso[i] == 0)
         {
-            relacion[i] = valor[i] * 500;
+            relacion[i] = valor[i] * 5000;
         }
         else
         {
-            relacion[i] = (valor[i]) * 100 / (peso[i]); // este valor es la relación entre el valor y peso de un producto
+            relacion[i] = (valor[i]) * 1000 / (peso[i]); // este valor es la relación entre el valor y peso de un producto
         }
     }
 }
