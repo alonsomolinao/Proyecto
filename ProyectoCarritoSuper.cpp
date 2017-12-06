@@ -11,9 +11,7 @@ void configurarTienda();
 void obtenerRatio();
 void mayoraMenorRatio();
 
-
 int main ()
-
 {
     int l, c, h;
     long sumaPeso;
@@ -27,18 +25,13 @@ int main ()
     relacion = new long[cantidadDeProductos];
     maxs = new long[cantidadDeProductos];
 
-
     obtenerRatio();
-
     mayoraMenorRatio();
-
 
     for (int i = 0; i < cantidadDeProductos; i++) //Se le asigna un valor de 1000 a la posicion para cambiar este valor mas adelante
     {
         pos[i] = 1000;
     }
-
-
 
     for (int i = 0; i < cantidadDeProductos; i++)
     {
@@ -52,7 +45,6 @@ int main ()
                     h++;
                 }
             }
-
             if (relacion[j] == maxs[i] && h == cantidadDeProductos)
             {
                 pos[i] = j; //es la pocision en las matrices originales en donde se encuentran los valores de mayor a menor.
@@ -84,7 +76,6 @@ int main ()
 
     c=0;
 
-
     for (int i = 0; i < cantidadDeProductos; i++)
     {
         c = 0;
@@ -105,13 +96,8 @@ int main ()
         }
 
     }
-
-
-
-
     return 0;
 }
-
 
 void configurarTienda()
 {
@@ -150,13 +136,10 @@ void obtenerRatio()
 void mayoraMenorRatio()
 {
     int temp;
-
     for (int i = 0; i < cantidadDeProductos; i++)
     {
         maxs[i] = relacion[i];
     }
-
-
     for(int i = 0;i<cantidadDeProductos;i++)
     {
         for(int j = 0;j<cantidadDeProductos - i - 1; j++)
@@ -170,5 +153,4 @@ void mayoraMenorRatio()
         }
     }
 }
-
 
