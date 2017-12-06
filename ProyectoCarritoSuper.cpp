@@ -16,7 +16,7 @@ int main ()
 
 {
     int l, c, h;
-    long sumapeso;
+    long sumaPeso;
 
     configurarTienda();
 
@@ -60,7 +60,7 @@ int main ()
         }
     }
 
-    sumapeso = 0;
+    sumaPeso = 0;
     l = 0;
 
     for (int i = 0; i < cantidadDeProductos; i++)
@@ -70,15 +70,15 @@ int main ()
 
     for (int i = 0; i < cantidadDeProductos; i++)
     {
-        sumapeso += peso[pos[i]];//se le suma el peso del siguiente producto conveniente
-        if (sumapeso <= pesoMaximo) //si el peso de los productos no excede la capacidad del carrito
+        sumaPeso += peso[pos[i]];//se le suma el peso del siguiente producto conveniente
+        if (sumaPeso <= pesoMaximo) //si el peso de los productos no excede la capacidad del carrito
         {
             l++;
             posf[l] = pos[i];
         }
         else
         {
-            sumapeso -= peso[pos[i]]; //se resta el peso de ese producto si el carrito ya no tenía la capacidad
+            sumaPeso -= peso[pos[i]]; //se resta el peso de ese producto si el carrito ya no tenía la capacidad
         }
     }
 
@@ -170,3 +170,5 @@ void mayoraMenorRatio()
         }
     }
 }
+
+
