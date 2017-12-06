@@ -32,7 +32,6 @@ int main ()
     {
         pos[i] = 1000;
     }
-
     for (int i = 0; i < cantidadDeProductos; i++)
     {
         for (int j = 0; j < cantidadDeProductos; j++)
