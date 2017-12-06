@@ -8,12 +8,13 @@ struct Articulo {
     long relacion = 0;
 };
 
+Articulo  * articulos;
 int cantidadDeProductos;
 int contador;
 long pesoMaximo;
-int * pos, * valor, * peso, *posf;
-long * relacion, * maxs;
-Articulo  * articulos;
+int * pos, *posf;
+long  * maxs;
+
 
 void configurarTienda();
 void obtenerRatio();
@@ -21,26 +22,26 @@ void mayoraMenorRatio();
 void imprimirResultados();
 void iniciarPosiciones();
 
+void debug(int data[],string disclaimer);
+void debug(long data[],string disclaimer);
 int main ()
 {
     int h;
     long sumaPeso;
-    
+
     configurarTienda();
-    
+
     articulos   = new Articulo[cantidadDeProductos];
-    
+
     posf = new int[cantidadDeProductos];
     pos = new int[cantidadDeProductos];
     maxs = new long[cantidadDeProductos];
-    
+
     obtenerRatio();
     mayoraMenorRatio();
-    
-    for (int i = 0; i < cantidadDeProductos; i++) //Se le asigna un valor de 1000 a la posicion para cambiar este valor mas adelante
-    {
-        pos[i] = 1000;
-    }
+
+    iniciarPosiciones();
+    debug(maxs, "imprimiendo maxs");
     for (int i = 0; i < cantidadDeProductos; i++)
     {
         for (int j = 0; j < cantidadDeProductos; j++)
@@ -59,13 +60,16 @@ int main ()
             }
         }
     }
-    
+
+    debug(pos,"imprimiendo posiciones");
+
+
     sumaPeso = 0;
     contador = 0;
-    
+
     iniciarPosiciones();
-    
-    
+
+
     for (int i = 0; i < cantidadDeProductos; i++)
     {
         sumaPeso += articulos[pos[i]].peso;//se le suma el peso del siguiente producto conveniente
@@ -80,7 +84,7 @@ int main ()
         }
     }
     imprimirResultados();
-    
+
     return 0;
 }
 
@@ -92,46 +96,6 @@ void iniciarPosiciones()
     }
 }
 
-void imprimirResultados()
-{
-    int valor = 0;
-    for (int i = 0; i < cantidadDeProductos; i++)
-    {
-        valor = 0;
-        for (int j = 1; j < contador + 1; j++)
-        {
-            if (i == posf[j])
-            {
-                valor=1;
-            }
-        }
-        if (valor == 1)
-        {
-            cout<<"1 ";
-        }
-        else if (valor == 0)
-        {
-            cout<<"0 ";
-        }
-    }
-}
-
-void configurarTienda()
-{
-    int n = 0;
-    long m = 0;
-    bool accepted = false;
-    while (!accepted)
-    {
-        cin>>n>>m;
-        if (n <= 20 && m <= 10000)
-        {
-            accepted = true;
-        }
-    }
-    cantidadDeProductos = n;
-    pesoMaximo = m;
-}
 
 void obtenerRatio()
 {
@@ -171,3 +135,64 @@ void mayoraMenorRatio()
     }
 }
 
+void configurarTienda()
+{
+    int n = 0;
+    long m = 0;
+    bool accepted = false;
+    while (!accepted)
+    {
+        cin>>n>>m;
+        if (n <= 20 && m <= 10000)
+        {
+            accepted = true;
+        }
+    }
+    cantidadDeProductos = n;
+    pesoMaximo = m;
+}
+
+void imprimirResultados()
+{
+    int valor = 0;
+    for (int i = 0; i < cantidadDeProductos; i++)
+    {
+        valor = 0;
+        for (int j = 1; j < contador + 1; j++)
+        {
+            if (i == posf[j])
+            {
+                valor=1;
+            }
+        }
+        if (valor == 1)
+        {
+            cout<<"1 ";
+        }
+        else if (valor == 0)
+        {
+            cout<<"0 ";
+        }
+    }
+}
+
+void debug(int data[], string disclaimer)
+{
+    printf("%s \n",disclaimer.c_str());
+    int length = sizeof(*data);
+    for(int i = 0; i < length-1; i++)
+    {
+        printf( "%i \n",data[i]);
+    }
+    printf("debug \n");
+}
+void debug(long data[], string disclaimer)
+{
+    printf("%s \n",disclaimer.c_str());
+    long length = sizeof(*data);
+    for(int i = 0; i < length-1; i++)
+    {
+        printf( "%i \n",data[i]);
+    }
+    printf("debug \n");
+}
