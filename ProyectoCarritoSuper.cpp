@@ -2,7 +2,7 @@
 
 using namespace std;
 
-struct articulo {
+struct Articulo {
     int valor = 0;
     int peso = 0;
     long relacion = 0;
@@ -13,6 +13,7 @@ int contador;
 long pesoMaximo;
 int * pos, * valor, * peso, *posf;
 long * relacion, * maxs;
+Articulo  * articulos;
 
 void configurarTienda();
 void obtenerRatio();
@@ -24,20 +25,18 @@ int main ()
 {
     int h;
     long sumaPeso;
-
+    
     configurarTienda();
-
-    valor = new int[cantidadDeProductos];
-    peso = new int[cantidadDeProductos];
-    relacion = new long[cantidadDeProductos];
-
+    
+    articulos   = new Articulo[cantidadDeProductos];
+    
     posf = new int[cantidadDeProductos];
     pos = new int[cantidadDeProductos];
     maxs = new long[cantidadDeProductos];
-
+    
     obtenerRatio();
     mayoraMenorRatio();
-
+    
     for (int i = 0; i < cantidadDeProductos; i++) //Se le asigna un valor de 1000 a la posicion para cambiar este valor mas adelante
     {
         pos[i] = 1000;
@@ -54,22 +53,22 @@ int main ()
                     h++;
                 }
             }
-            if (relacion[j] == maxs[i] && h == cantidadDeProductos)
+            if (articulos[j].relacion == maxs[i] && h == cantidadDeProductos)
             {
                 pos[i] = j; //es la pocision en las matrices originales en donde se encuentran los valores de mayor a menor.
             }
         }
     }
-
+    
     sumaPeso = 0;
     contador = 0;
-
+    
     iniciarPosiciones();
-
-
+    
+    
     for (int i = 0; i < cantidadDeProductos; i++)
     {
-        sumaPeso += peso[pos[i]];//se le suma el peso del siguiente producto conveniente
+        sumaPeso += articulos[pos[i]].peso;//se le suma el peso del siguiente producto conveniente
         if (sumaPeso <= pesoMaximo) //si el peso de los productos no excede la capacidad del carrito
         {
             contador++;
@@ -77,11 +76,11 @@ int main ()
         }
         else
         {
-            sumaPeso -= peso[pos[i]]; //se resta el peso de ese producto si el carrito ya no tenía la capacidad
+            sumaPeso -= articulos[pos[i]].peso; //se resta el peso de ese producto si el carrito ya no tenía la capacidad
         }
     }
     imprimirResultados();
-
+    
     return 0;
 }
 
@@ -138,15 +137,15 @@ void obtenerRatio()
 {
     for (int i = 0; i < cantidadDeProductos; i++) //Se lee el peso y valor de n cantidad de productos.
     {
-        cin>>peso[i];
-        cin>>valor[i];
-        if (peso[i] == 0)
+        cin>>articulos[i].peso;
+        cin>>articulos[i].valor;
+        if (articulos[i].peso == 0)
         {
-            relacion[i] = valor[i] * 5000;
+            articulos[i].relacion =  articulos[i].valor * 5000;
         }
         else
         {
-            relacion[i] = (valor[i]) * 1000 / (peso[i]); // este valor es la relación entre el valor y peso de un producto
+            articulos[i].relacion = (articulos[i].valor) * 1000 / (articulos[i].peso); // este valor es la relación entre el valor y peso de un producto
         }
     }
 }
@@ -156,7 +155,7 @@ void mayoraMenorRatio()
     int temp;
     for (int i = 0; i < cantidadDeProductos; i++)
     {
-        maxs[i] = relacion[i];
+        maxs[i] = articulos[i].relacion;
     }
     for(int i = 0;i<cantidadDeProductos;i++)
     {
