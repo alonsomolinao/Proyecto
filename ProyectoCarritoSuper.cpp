@@ -3,6 +3,7 @@
 using namespace std;
 
 int cantidadDeProductos;
+int contador;
 long pesoMaximo;
 int * pos, * valor, * peso, *posf;
 long * relacion, * maxs;
@@ -10,10 +11,12 @@ long * relacion, * maxs;
 void configurarTienda();
 void obtenerRatio();
 void mayoraMenorRatio();
+void imprimirResultados();
+void iniciarPosiciones();
 
 int main ()
 {
-    int l, c, h;
+    int h;
     long sumaPeso;
 
     configurarTienda();
@@ -27,11 +30,8 @@ int main ()
 
     obtenerRatio();
     mayoraMenorRatio();
+    iniciarPosiciones();
 
-    for (int i = 0; i < cantidadDeProductos; i++) //Se le asigna un valor de 1000 a la posicion para cambiar este valor mas adelante
-    {
-        pos[i] = 1000;
-    }
     for (int i = 0; i < cantidadDeProductos; i++)
     {
         for (int j = 0; j < cantidadDeProductos; j++)
@@ -52,50 +52,58 @@ int main ()
     }
 
     sumaPeso = 0;
-    l = 0;
+    contador = 0;
 
-    for (int i = 0; i < cantidadDeProductos; i++)
-    {
-        posf[i] = 1000;
-    }
+    iniciarPosiciones();
 
     for (int i = 0; i < cantidadDeProductos; i++)
     {
         sumaPeso += peso[pos[i]];//se le suma el peso del siguiente producto conveniente
         if (sumaPeso <= pesoMaximo) //si el peso de los productos no excede la capacidad del carrito
         {
-            l++;
-            posf[l] = pos[i];
+            contador++;
+            posf[contador] = pos[i];
         }
         else
         {
             sumaPeso -= peso[pos[i]]; //se resta el peso de ese producto si el carrito ya no tenía la capacidad
         }
     }
+    imprimirResultados();
 
-    c=0;
+    return 0;
+}
 
+void iniciarPosiciones()
+{
     for (int i = 0; i < cantidadDeProductos; i++)
     {
-        c = 0;
-        for (int j = 1; j < l + 1; j++)
+        posf[i] = 1000;
+    }
+}
+
+void imprimirResultados()
+{
+    int valor = 0;
+    for (int i = 0; i < cantidadDeProductos; i++)
+    {
+        valor = 0;
+        for (int j = 1; j < contador + 1; j++)
         {
             if (i == posf[j])
             {
-                c=1;
+                valor=1;
             }
         }
-        if (c == 1)
+        if (valor == 1)
         {
             cout<<"1 ";
         }
-        else if (c == 0)
+        else if (valor == 0)
         {
             cout<<"0 ";
         }
-
     }
-    return 0;
 }
 
 void configurarTienda()
